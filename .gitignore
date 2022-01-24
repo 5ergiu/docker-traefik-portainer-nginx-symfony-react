@@ -1,0 +1,28 @@
+###> react/frontend ###
+frontend/node_modules
+frontend/build
+frontend/.pnp
+frontend/.pnp.js
+frontend/coverage
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/.cache
+frontend/.config
+frontend/.yarn
+frontend/.npm
+###< react/frontend ###
+
+###> symfony/framework-bundle ###
+.env
+backend/var
+backend/vendor
+###< symfony/framework-bundle ###
+
+###> caching, config ###
+.DS_Store
+.idea
+.vscode
+/docker-compose.override.yml
+.docker/acme.json
+###< caching & settings ###

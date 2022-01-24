@@ -1,0 +1,138 @@
+version: "3.8"
+
+services:
+  traefik:
+    container_name: ${APP_NAME}-traefik
+    image: traefik:latest
+    command:
+      - --api.dashboard=true
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --certificatesresolvers.do.acme.dnschallenge=true
+      - --certificatesresolvers.do.acme.dnschallenge.provider=digitalocean
+      - --certificatesresolvers.do.acme.email=sergiu.a.bugeac@gmail.com
+      - --certificatesresolvers.do.acme.storage=/acme.json
+      - --entrypoints.web.address=:80
+      - --entrypoints.web.http.redirections.entrypoint.to=web-secure
+      - --entrypoints.web.http.redirections.entrypoint.scheme=https
+      - --entrypoints.web.http.redirections.entrypoint.permanent=true
+      - --entrypoints.web-secure.address=:443
+    environment:
+      - DOMAIN
+      - DO_AUTH_TOKEN
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - .docker/acme.json:/acme.json
+    ports:
+      - "80:80"
+      - "443:443"
+    security_opt:
+      - no-new-privileges:true
+    labels:
+      traefik.enable: true
+      traefik.http.middlewares.user-auth.basicauth.users: admin:${TRAEFIK_PASS}
+      traefik.http.routers.traefik.rule: Host(`traefik.${DOMAIN}`)
+      traefik.http.routers.traefik.entrypoints: web-secure
+      traefik.http.routers.traefik.tls.certresolver: do
+      traefik.http.routers.traefik.tls.domains[0].main: ${DOMAIN}
+      traefik.http.routers.traefik.tls.domains[0].sans: "*.${DOMAIN}"
+      traefik.http.routers.traefik.service: api@internal
+      traefik.http.routers.traefik.middlewares: user-auth
+    restart: unless-stopped
+
+  database:
+    container_name: ${APP_NAME}-db
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASS:-dev}
+      MYSQL_DATABASE: ${DB_NAME:-dev}
+    volumes:
+      - ./storage/mysql:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3306:3306"
+    restart: unless-stopped
+    depends_on:
+      - traefik
+
+  backend:
+    container_name: ${APP_NAME}-backend
+    build:
+      context: .
+      args:
+        UID: ${UID:-1000}
+    environment:
+      PHP_OPCACHE_VALIDATE_TIMESTAMPS: ${PHP_OPCACHE_VALIDATE_TIMESTAMPS:-1}
+    volumes:
+      - ./backend:/var/api
+      - .env:/var/api/.env
+      - .docker/php.ini:/usr/local/etc/php/conf.d/php.ini
+      - .docker/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini
+    working_dir: /var/api
+    command:
+      - bash
+      - -c
+      - |
+        composer install --prefer-dist --no-interaction
+        composer dump-autoload --optimize --classmap-authoritative
+        php-fpm
+    restart: unless-stopped
+    depends_on:
+      - database
+
+  frontend:
+    container_name: ${APP_NAME}-frontend
+    image: node:latest
+    volumes:
+      - ./frontend:/var/www
+    working_dir: /var/www
+    command:
+      - bash
+      - -c
+      - |
+        yarn
+        yarn build
+        tail -f /dev/null
+    restart: unless-stopped
+    depends_on:
+      - backend
+
+  nginx:
+    container_name: ${APP_NAME}-nginx
+    image: nginx:latest
+    environment:
+      - DOMAIN
+    volumes:
+      - ./frontend/build:/var/www/public
+      - ./backend/public:/var/api/public
+      - .docker/nginx.conf:/etc/nginx/nginx.conf
+      - .docker/api.conf.template:/etc/nginx/templates/default.conf.template
+      - ./logs/nginx:/var/log/nginx
+    labels:
+      traefik.enable: true
+      traefik.http.routers.backend.rule: Host(`${DOMAIN}`,`www.${DOMAIN}`,`api.${DOMAIN}`)
+      traefik.http.routers.backend.entrypoints: web-secure
+      traefik.http.routers.backend.tls.certresolver: do
+      traefik.http.routers.backend.tls.domains[0].main: ${DOMAIN}
+      traefik.http.routers.backend.tls.domains[0].sans: "*.${DOMAIN}"
+    restart: unless-stopped
+    depends_on:
+      - frontend
+
+  portainer:
+    container_name: ${APP_NAME}-portainer
+    image: portainer/portainer-ce
+    volumes:
+      - ./storage/portainer:/data
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+      traefik.enable: true
+      traefik.http.routers.portainer.rule: Host(`portainer.${DOMAIN}`)
+      traefik.http.routers.portainer.entrypoints: web-secure
+      traefik.http.routers.portainer.tls.certresolver: do
+      traefik.http.routers.portainer.tls.domains[0].main: ${DOMAIN}
+      traefik.http.routers.portainer.tls.domains[0].sans: "*.${DOMAIN}"
+      traefik.http.services.portainer.loadbalancer.server.port: 9000
+    restart: unless-stopped
+    depends_on:
+      - traefik

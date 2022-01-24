@@ -1,0 +1,26 @@
+server {
+    listen 80;
+    root   /var/api/public;
+    index  index.php;
+    server_name api.${DOMAIN};
+
+    charset utf-8;
+
+    location / {
+        try_files $uri /index.php$is_args$args;
+    }
+
+    location ~ ^/index\\.php(/|$) {
+        fastcgi_pass         backend:9000;
+        fastcgi_index        index.php;
+        fastcgi_buffers      16 16k;
+        fastcgi_buffer_size  32k;
+        fastcgi_param        SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param        DOCUMENT_ROOT $realpath_root;
+        fastcgi_read_timeout 600;
+        include              fastcgi_params;
+    }
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location = /robots.txt  { access_log off; log_not_found off; }
+}

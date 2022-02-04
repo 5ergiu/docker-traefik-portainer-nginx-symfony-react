@@ -22,7 +22,6 @@
 * [Configuration](#-configuration)
 * [Folder structure](#-folder-structure)
 * [Scripts](#-scripts)
-* [Release notes](#-release-notes)
 * [License](#-license)
 
 [![-----------------------------------------------------](https://user-images.githubusercontent.com/56088716/103312593-8a37ff80-49eb-11eb-91d3-75488e21a0a9.png)]()

@@ -65,7 +65,7 @@ installed on your system, and then clone this repository.
 
 [![-----------------------------------------------------](https://user-images.githubusercontent.com/56088716/103312593-8a37ff80-49eb-11eb-91d3-75488e21a0a9.png)]()
 
-## 🛠️ Configuration
+## 🔧 Configuration
 
 The configuration is mostly controlled through environment variables.
 There are the usual env variables used by Symfony and some used to configure Docker and PHP.

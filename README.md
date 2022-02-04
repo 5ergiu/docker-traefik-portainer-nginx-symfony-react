@@ -14,25 +14,25 @@
 <a href="https://github.com/tjackenpacken/taskbar-groups/blob/master/LICENSE"><img alt="Latest version" src="https://img.shields.io/github/license/5ergiu/docker-traefik-portainer-nginx-symfony-react?style=for-the-badge" height="20"/></a>
 </p>
 
-[![-----------------------------------------------------](https://user-images.githubusercontent.com/56088716/103312593-8a37ff80-49eb-11eb-91d3-75488e21a0a9.png)]()
-
 📖 Contents
 ========
 
-* [Tech stack](#tech-stack)
-* [Installation](#installation)
-* [Configuration](#configuration)
-* [Release notes](#release-notes)
-* [Scripts](#scripts)
-* [Development](#development)
+* [Tech stack](#-tech-stack)
+* [Installation](#-installation)
+* [Configuration](#-configuration)
+* [Folder structure](#-folder-structure)
+* [Scripts](#-scripts)
+* [Release notes](#-release-notes)
+* [Development](#-development)
+* [License](#-license)
 
 [![-----------------------------------------------------](https://user-images.githubusercontent.com/56088716/103312593-8a37ff80-49eb-11eb-91d3-75488e21a0a9.png)]()
 
-## Tech stack
+## 🧰 Tech stack
 
 | Stack           | Technology                                                                                                                                                                                                                                                           |
 |-----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 🛠️ Environment | Docker                                                                                                                                                                                                                                                               |
+| 🛠️ Environment | [Docker](https://www.docker.com/)                                                                                                                                                                                                                                    |
 | 💻 Backend      | [Symfony](https://symfony.com/) using [PHP-FPM](https://www.php.net/manual/en/install.fpm.php) 8.1.1 (with [OPcache](https://devdojo.com/bobbyiliev/how-to-speed-up-your-laravel-application-with-php-opcache) & [JIT compiler](https://kinsta.com/blog/php-8/#jit)) |
 | 🌐 Frontend     | [React](https://reactjs.org/) using [TypeScript](https://www.typescriptlang.org/)                                                                                                                                                                                    |
 | 🛢 Database     | [MySQL](https://www.mysql.com/)                                                                                                                                                                                                                                      |
@@ -86,7 +86,7 @@ so no need to run "watch" or anything, just make your changes and save the file,
 
 [![-----------------------------------------------------](https://user-images.githubusercontent.com/56088716/103312593-8a37ff80-49eb-11eb-91d3-75488e21a0a9.png)]()
 
-## 📁 Folder Structure Documentation
+## 📁 Folder structure
 
 - `.docker` Configuration files
 - `backend` Symfony PHP framework + everything related to backend

@@ -125,15 +125,5 @@ so no need to run "watch" or anything, just make your changes and save the file,
 
 [![-----------------------------------------------------](https://user-images.githubusercontent.com/56088716/103312593-8a37ff80-49eb-11eb-91d3-75488e21a0a9.png)]()
 
-## 💻 Development
-
-* Each feature/task/issue is developed on a separate branch
-* [SOLID](https://geekflare.com/php-solid-principles/)
-* [Mobile first design](https://medium.com/@Vincentxia77/what-is-mobile-first-design-why-its-important-how-to-make-it-7d3cf2e29d00)
-* [BEM methodology for CSS](https://en.bem.info/methodology/)
-* Translations ordered alphabetically for ease of use
-
-[![-----------------------------------------------------](https://user-images.githubusercontent.com/56088716/103312593-8a37ff80-49eb-11eb-91d3-75488e21a0a9.png)]()
-
 ## 📄 License
 This project is licensed under the [MIT License](https://github.com/5ergiu/docker-traefik-portainer-nginx-symfony-react/blob/main/LICENSE).

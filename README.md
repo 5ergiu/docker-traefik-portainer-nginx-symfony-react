@@ -23,7 +23,6 @@
 * [Folder structure](#-folder-structure)
 * [Scripts](#-scripts)
 * [Release notes](#-release-notes)
-* [Development](#-development)
 * [License](#-license)
 
 [![-----------------------------------------------------](https://user-images.githubusercontent.com/56088716/103312593-8a37ff80-49eb-11eb-91d3-75488e21a0a9.png)]()
@@ -111,17 +110,6 @@ so no need to run "watch" or anything, just make your changes and save the file,
   ```
 
 #### 🍪 You could also create some aliases to further shorten these commands
-
-[![-----------------------------------------------------](https://user-images.githubusercontent.com/56088716/103312593-8a37ff80-49eb-11eb-91d3-75488e21a0a9.png)]()
-
-## 📰 Release Notes
-
-1. Pull code from main git repo
-2. If necessary:
-    1. Run migrations *(in project root)*: **./scripts/bin doctrine:migrations:migrate**
-    2. Install new dependencies *(in project root)*: **./scripts/bin composer install**
-    3. Build frontend assets *(in project root)*: **./scripts/yarn build**
-    4. Restart/rebuild docker images/containers
 
 [![-----------------------------------------------------](https://user-images.githubusercontent.com/56088716/103312593-8a37ff80-49eb-11eb-91d3-75488e21a0a9.png)]()
 

@@ -102,7 +102,7 @@ so no need to run "watch" or anything, just make your changes and save the file,
    ./scripts/bin make:controller TestController
    ./scripts/bin doctrine:migrations:migrate
   ```
-- **./scripts/yarn [and the command you want to run]** *(in project root)*: Run console commands on frontend
+- **./scripts/yarn [and the command you want to run]** *(in project root)*:
   ```
    ./scripts/yarn build
    ./scripts/yarn test

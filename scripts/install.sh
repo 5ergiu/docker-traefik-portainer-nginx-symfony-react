@@ -78,6 +78,7 @@ select opt in "${OPTIONS[@]}" 'Quit'; do
         toast "acme.json file wasn't found. Creating it at /.docker/acme.json"; echo '';
         touch .docker/acme.json && chmod 600 .docker/acme.json;
       fi
+      read -p "DO_AUTH_EMAIL: " DO_AUTH_TOKEN && sed -i "s/DO_AUTH_EMAIL=.*$/DO_AUTH_EMAIL=$DO_AUTH_EMAIL/" .env;
       read -p "DO_AUTH_TOKEN: " DO_AUTH_TOKEN && sed -i "s/DO_AUTH_TOKEN=.*$/DO_AUTH_TOKEN=$DO_AUTH_TOKEN/" .env;
       toast 'Successfully added DO_AUTH_TOKEN'; echo '';
     else

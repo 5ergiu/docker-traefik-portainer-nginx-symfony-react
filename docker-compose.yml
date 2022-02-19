@@ -10,7 +10,7 @@ services:
       - --providers.docker.exposedbydefault=false
       - --certificatesresolvers.do.acme.dnschallenge=true
       - --certificatesresolvers.do.acme.dnschallenge.provider=digitalocean
-      - --certificatesresolvers.do.acme.email=sergiu.a.bugeac@gmail.com
+      - --certificatesresolvers.do.acme.email=${DO_AUTH_EMAIL}
       - --certificatesresolvers.do.acme.storage=/acme.json
       - --entrypoints.web.address=:80
       - --entrypoints.web.http.redirections.entrypoint.to=web-secure
